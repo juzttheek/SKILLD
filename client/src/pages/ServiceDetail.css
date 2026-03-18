@@ -1,0 +1,219 @@
+.service-detail-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.service-detail-main {
+  padding-top: 78px;
+}
+
+.sd-layout {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 65%) minmax(0, 35%);
+  gap: 1.2rem;
+}
+
+.sd-gallery {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.sd-main-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.sd-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.sd-thumbs button {
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  background: transparent;
+  cursor: pointer;
+}
+
+.sd-thumbs button.active {
+  border-color: #3b6d11;
+}
+
+.sd-thumbs img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.sd-left h1 {
+  margin: 1rem 0 0.7rem;
+  color: #111827;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.sd-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.sd-description,
+.sd-reviews {
+  margin-top: 1.2rem;
+}
+
+.sd-description h2,
+.sd-reviews h2 {
+  margin: 0 0 0.5rem;
+  color: #111827;
+}
+
+.sd-description p {
+  margin: 0;
+  color: #374151;
+  line-height: 1.55;
+}
+
+.sd-review-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.sd-right {
+  position: relative;
+}
+
+.sd-side-card {
+  position: sticky;
+  top: 96px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.sd-price {
+  margin: 0;
+  color: #3b6d11;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.sd-pricing-type {
+  margin: 0.2rem 0 0.9rem;
+  color: #6b7280;
+  text-transform: capitalize;
+}
+
+.sd-meta,
+.sd-muted {
+  color: #6b7280;
+  margin: 0;
+}
+
+.sd-contact-btn {
+  width: 100%;
+  margin: 0.95rem 0;
+}
+
+.sd-worker-mini {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 0.65rem;
+  align-items: start;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 0.95rem;
+}
+
+.sd-worker-mini img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 999px;
+  background: #eaf3de;
+}
+
+.sd-worker-name {
+  margin: 0 0 0.2rem;
+  color: #111827;
+  font-weight: 700;
+}
+
+.sd-profile-link {
+  margin-top: 0.8rem;
+  display: inline-block;
+  color: #3b6d11;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.sd-auth-modal-content p {
+  margin: 0;
+  color: #374151;
+}
+
+.sd-auth-modal-actions {
+  margin-top: 0.85rem;
+  display: flex;
+  gap: 0.55rem;
+}
+
+.sd-auth-modal-actions a {
+  text-decoration: none;
+}
+
+.sd-skeleton {
+  max-width: 1180px;
+  margin: 2rem auto;
+  height: 420px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f9f9f6 25%, #f3f4f6 50%, #f9f9f6 75%);
+  background-size: 300% 100%;
+  animation: sd-shimmer 1.2s infinite;
+}
+
+@keyframes sd-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.sd-empty {
+  max-width: 1180px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.sd-empty h2 {
+  color: #111827;
+}
+
+.sd-empty a {
+  color: #3b6d11;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+@media (max-width: 980px) {
+  .sd-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sd-side-card {
+    position: static;
+  }
+}

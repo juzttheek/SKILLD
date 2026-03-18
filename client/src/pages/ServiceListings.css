@@ -1,0 +1,263 @@
+.service-listings-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.service-listings-main {
+  padding-top: 78px;
+}
+
+.svc-layout {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1.2rem;
+}
+
+.svc-sidebar {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  height: fit-content;
+  position: sticky;
+  top: 90px;
+}
+
+.svc-filters-panel {
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.svc-filter-group {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.svc-filter-title {
+  margin: 0;
+  color: #111827;
+  font-weight: 700;
+}
+
+.svc-check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #374151;
+}
+
+.svc-check-row input {
+  accent-color: #3b6d11;
+}
+
+.svc-price-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.svc-price-grid input,
+.svc-topbar input,
+.svc-topbar select {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.62rem 0.68rem;
+  font: inherit;
+  outline: none;
+}
+
+.svc-clear-link {
+  border: 0;
+  background: transparent;
+  color: #639922;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.svc-apply-btn {
+  width: 100%;
+}
+
+.svc-results {
+  min-width: 0;
+}
+
+.svc-topbar {
+  display: grid;
+  grid-template-columns: 1fr 220px auto;
+  gap: 0.6rem;
+}
+
+.svc-mobile-filter-btn {
+  display: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0 0.9rem;
+  cursor: pointer;
+}
+
+.svc-results-count {
+  margin: 0.9rem 0;
+  color: #6b7280;
+}
+
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.svc-card-link {
+  text-decoration: none;
+}
+
+.svc-card-skeleton {
+  height: 300px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f9f9f6 25%, #f3f4f6 50%, #f9f9f6 75%);
+  background-size: 300% 100%;
+  animation: svc-shimmer 1.2s infinite;
+}
+
+@keyframes svc-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.svc-pagination {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.svc-pagination button {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  min-width: 36px;
+  padding: 0.45rem 0.65rem;
+  cursor: pointer;
+}
+
+.svc-pagination button.active {
+  background: #3b6d11;
+  color: #ffffff;
+  border-color: #3b6d11;
+}
+
+.svc-pagination button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.svc-empty {
+  border: 1px dashed #d1d5db;
+  border-radius: 12px;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.svc-empty-illustration {
+  font-size: 42px;
+}
+
+.svc-empty h2 {
+  margin: 0.5rem 0 0.35rem;
+  color: #111827;
+}
+
+.svc-empty p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.svc-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.45);
+  z-index: 1200;
+  display: none;
+}
+
+.svc-drawer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  border-radius: 14px 14px 0 0;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.svc-drawer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.8rem 1rem;
+}
+
+.svc-drawer-head h3 {
+  margin: 0;
+  color: #111827;
+}
+
+.svc-drawer-head button {
+  border: 0;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.svc-drawer-backdrop.open {
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .svc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 840px) {
+  .svc-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .svc-sidebar {
+    display: none;
+  }
+
+  .svc-topbar {
+    grid-template-columns: 1fr 170px auto;
+  }
+
+  .svc-mobile-filter-btn {
+    display: block;
+  }
+}
+
+@media (max-width: 640px) {
+  .svc-topbar {
+    grid-template-columns: 1fr;
+  }
+
+  .svc-grid {
+    grid-template-columns: 1fr;
+  }
+}
