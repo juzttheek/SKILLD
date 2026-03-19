@@ -12,7 +12,8 @@
 .sh-navbar-inner {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 0.85rem 1rem;
+  min-height: var(--app-header-offset);
+  padding: 0 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -136,7 +137,7 @@
 .sh-footer {
   background: #27500a;
   color: #ffffff;
-  margin-top: 2.5rem;
+  margin-top: auto;
 }
 
 .sh-footer-grid {
@@ -543,3 +544,4 @@
 .sh-modal-body {
   padding: 1rem;
 }
+

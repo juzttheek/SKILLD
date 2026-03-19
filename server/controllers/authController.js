@@ -11,8 +11,8 @@ const register = async (req, res, next) => {
 			return res.status(400).json({ message: "name, email, password, and role are required" });
 		}
 
-		if (!["client", "worker"].includes(role)) {
-			return res.status(400).json({ message: "Role must be client or worker" });
+		if (!["client", "worker", "both"].includes(role)) {
+			return res.status(400).json({ message: "Role must be client, worker, or both" });
 		}
 
 		const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
@@ -29,7 +29,7 @@ const register = async (req, res, next) => {
 			role,
 		});
 
-		if (role === "worker") {
+		if (["worker", "both"].includes(role)) {
 			await WorkerProfile.create({ user: user._id });
 		}
 

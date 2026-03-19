@@ -4,7 +4,7 @@
 }
 
 .dashboard-main {
-  padding-top: 78px;
+  padding-top: var(--app-header-offset);
   background: #ffffff;
 }
 
@@ -415,3 +415,4 @@
     justify-items: start;
   }
 }
+

@@ -4,7 +4,12 @@ const User = require("../models/User");
 
 const createReview = async (req, res, next) => {
 	try {
-		const { revieweeId, rating, comment, jobId, serviceId, type } = req.body;
+		const revieweeId = req.body.revieweeId || req.body.reviewedUser;
+		const rating = req.body.rating;
+		const comment = req.body.comment;
+		const jobId = req.body.jobId || req.body.job;
+		const serviceId = req.body.serviceId || req.body.service;
+		const type = req.body.type;
 
 		if (!revieweeId || !rating || !type) {
 			return res.status(400).json({ message: "revieweeId, rating, and type are required" });

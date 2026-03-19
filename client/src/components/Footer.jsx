@@ -1,7 +1,41 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "./components.css";
 
 const Footer = () => {
+  const { user } = useAuth();
+  const role = user?.role || "guest";
+
+  const quickLinksByRole = {
+    guest: [
+      { to: "/services", label: "Services" },
+      { to: "/jobs", label: "Jobs" },
+      { to: "/register", label: "Signup" },
+    ],
+    client: [
+      { to: "/services", label: "Services" },
+      { to: "/post-job", label: "Post Job" },
+      { to: "/dashboard", label: "Dashboard" },
+    ],
+    worker: [
+      { to: "/jobs", label: "Jobs" },
+      { to: "/create-service", label: "Create Service" },
+      { to: "/dashboard", label: "Dashboard" },
+    ],
+    both: [
+      { to: "/post-job", label: "Post Job" },
+      { to: "/create-service", label: "Create Service" },
+      { to: "/dashboard", label: "Dashboard" },
+    ],
+    admin: [
+      { to: "/admin", label: "Admin" },
+      { to: "/services", label: "Services" },
+      { to: "/jobs", label: "Jobs" },
+    ],
+  };
+
+  const quickLinks = quickLinksByRole[role] || quickLinksByRole.guest;
+
   return (
     <footer className="sh-footer">
       <div className="sh-footer-grid">
@@ -12,15 +46,11 @@ const Footer = () => {
 
         <div>
           <p className="sh-footer-title">Quick Links</p>
-          <p>
-            <Link to="/services">Services</Link>
-          </p>
-          <p>
-            <Link to="/jobs">Jobs</Link>
-          </p>
-          <p>
-            <Link to="/dashboard">Dashboard</Link>
-          </p>
+          {quickLinks.map((item) => (
+            <p key={item.to}>
+              <Link to={item.to}>{item.label}</Link>
+            </p>
+          ))}
         </div>
 
         <div>

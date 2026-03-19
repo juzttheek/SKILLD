@@ -1,3 +1,7 @@
+:root {
+  --app-header-offset: 78px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -13,6 +17,22 @@ body {
   background: #ffffff;
   color: #111827;
   font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+div[class$="-page"] {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main[class$="-main"] {
+  flex: 1 0 auto;
+  min-width: 0;
 }
 
 ::-webkit-scrollbar {
@@ -28,3 +48,16 @@ body {
 ::-webkit-scrollbar-track {
   background: #eaf3de;
 }
+
+@media (max-width: 768px) {
+  :root {
+    --app-header-offset: 72px;
+  }
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+

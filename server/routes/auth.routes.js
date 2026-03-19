@@ -27,8 +27,8 @@ const registerValidation = [
 		.trim()
 		.notEmpty()
 		.withMessage("Role is required")
-		.isIn(["client", "worker"])
-		.withMessage("Role must be client or worker"),
+		.isIn(["client", "worker", "both"])
+		.withMessage("Role must be client, worker, or both"),
 ];
 
 const loginValidation = [

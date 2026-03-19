@@ -4,7 +4,7 @@
 }
 
 .job-board-main {
-  padding-top: 78px;
+  padding-top: var(--app-header-offset);
 }
 
 .jb-layout {
@@ -22,7 +22,7 @@
   background: #ffffff;
   height: fit-content;
   position: sticky;
-  top: 90px;
+  top: calc(var(--app-header-offset) + 12px);
 }
 
 .jb-filters-panel {
@@ -248,3 +248,4 @@
     grid-template-columns: 1fr;
   }
 }
+

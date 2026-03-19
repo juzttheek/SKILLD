@@ -4,8 +4,8 @@ const WorkerProfile = require("../models/WorkerProfile");
 
 const createJob = async (req, res, next) => {
 	try {
-		if (!req.user || req.user.role !== "client") {
-			return res.status(403).json({ message: "Only clients can create jobs" });
+		if (!req.user || !["client", "both"].includes(req.user.role)) {
+			return res.status(403).json({ message: "Only client or both-role users can create jobs" });
 		}
 
 		const {
@@ -108,7 +108,7 @@ const getJobById = async (req, res, next) => {
 
 		const response = job.toObject();
 
-		if (req.user && req.user.role === "worker") {
+		if (req.user && ["worker", "both"].includes(req.user.role)) {
 			const application = await Application.findOne({ job: job._id, worker: req.user._id }).select("status");
 			response.workerApplicationStatus = application ? application.status : null;
 		}
@@ -121,8 +121,8 @@ const getJobById = async (req, res, next) => {
 
 const updateJob = async (req, res, next) => {
 	try {
-		if (!req.user || req.user.role !== "client") {
-			return res.status(403).json({ message: "Only clients can update jobs" });
+		if (!req.user || !["client", "both"].includes(req.user.role)) {
+			return res.status(403).json({ message: "Only client or both-role users can update jobs" });
 		}
 
 		const job = await Job.findById(req.params.id);
@@ -167,8 +167,8 @@ const updateJob = async (req, res, next) => {
 
 const deleteJob = async (req, res, next) => {
 	try {
-		if (!req.user || req.user.role !== "client") {
-			return res.status(403).json({ message: "Only clients can delete jobs" });
+		if (!req.user || !["client", "both"].includes(req.user.role)) {
+			return res.status(403).json({ message: "Only client or both-role users can delete jobs" });
 		}
 
 		const job = await Job.findById(req.params.id);
@@ -191,8 +191,8 @@ const deleteJob = async (req, res, next) => {
 
 const applyToJob = async (req, res, next) => {
 	try {
-		if (!req.user || req.user.role !== "worker") {
-			return res.status(403).json({ message: "Only workers can apply to jobs" });
+		if (!req.user || !["worker", "both"].includes(req.user.role)) {
+			return res.status(403).json({ message: "Only worker or both-role users can apply to jobs" });
 		}
 
 		const { id: jobId } = req.params;
@@ -232,8 +232,8 @@ const applyToJob = async (req, res, next) => {
 
 const getApplicationsForJob = async (req, res, next) => {
 	try {
-		if (!req.user || req.user.role !== "client") {
-			return res.status(403).json({ message: "Only clients can view job applications" });
+		if (!req.user || !["client", "both"].includes(req.user.role)) {
+			return res.status(403).json({ message: "Only client or both-role users can view job applications" });
 		}
 
 		const { id: jobId } = req.params;
@@ -271,8 +271,8 @@ const getApplicationsForJob = async (req, res, next) => {
 
 const acceptApplication = async (req, res, next) => {
 	try {
-		if (!req.user || req.user.role !== "client") {
-			return res.status(403).json({ message: "Only clients can accept applications" });
+		if (!req.user || !["client", "both"].includes(req.user.role)) {
+			return res.status(403).json({ message: "Only client or both-role users can accept applications" });
 		}
 
 		const { jobId, applicationId } = req.params;

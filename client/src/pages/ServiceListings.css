@@ -4,7 +4,7 @@
 }
 
 .service-listings-main {
-  padding-top: 78px;
+  padding-top: var(--app-header-offset);
 }
 
 .svc-layout {
@@ -22,7 +22,7 @@
   background: #ffffff;
   height: fit-content;
   position: sticky;
-  top: 90px;
+  top: calc(var(--app-header-offset) + 12px);
 }
 
 .svc-filters-panel {
@@ -261,3 +261,4 @@
     grid-template-columns: 1fr;
   }
 }
+

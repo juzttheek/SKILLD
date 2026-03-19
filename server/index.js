@@ -10,8 +10,9 @@ const serviceRoutes = require("./routes/service.routes");
 const jobRoutes = require("./routes/job.routes");
 const messageRoutes = require("./routes/message.routes");
 const reviewRoutes = require("./routes/review.routes");
+const userRoutes = require("./routes/user.routes");
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 connectDB();
 
 const app = express();
@@ -75,6 +76,7 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/users", userRoutes);
 
 app.get("/api/health", (req, res) => {
   res.status(200).json({ message: "ServiceHire API is running" });

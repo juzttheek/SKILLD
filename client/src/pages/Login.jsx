@@ -37,7 +37,10 @@ const Login = () => {
       const redirectTo = location.state?.from?.pathname || "/dashboard";
       navigate(redirectTo, { replace: true });
     } catch (error) {
-      const message = error?.response?.data?.message || "Unable to sign in.";
+      const message =
+        error?.response?.data?.errors?.[0]?.message ||
+        error?.response?.data?.message ||
+        "Unable to sign in.";
       setApiError(message);
       toast.error(message);
     }

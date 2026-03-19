@@ -1,0 +1,142 @@
+.client-profile-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.client-profile-main {
+  padding-top: var(--app-header-offset);
+}
+
+.cp-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.cp-header h1 {
+  margin: 0;
+  color: #111827;
+  font-size: 30px;
+}
+
+.cp-header p {
+  margin: 0.45rem 0 0;
+  color: #6b7280;
+}
+
+.cp-skeleton {
+  margin-top: 1rem;
+  height: 220px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f9f9f6 25%, #f3f4f6 50%, #f9f9f6 75%);
+  background-size: 300% 100%;
+  animation: cp-shimmer 1.2s infinite;
+}
+
+@keyframes cp-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.cp-stats-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.cp-stat-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.cp-stat-value {
+  margin: 0;
+  color: #3b6d11;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.cp-stat-label {
+  margin: 0.3rem 0 0;
+  color: #6b7280;
+}
+
+.cp-panel {
+  margin-top: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.cp-panel h2 {
+  margin: 0 0 0.8rem;
+  color: #111827;
+}
+
+.cp-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.cp-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cp-item-title {
+  margin: 0;
+  color: #111827;
+  font-weight: 700;
+}
+
+.cp-item-subtitle {
+  margin: 0.2rem 0 0;
+  color: #6b7280;
+}
+
+.cp-item-meta {
+  display: grid;
+  justify-items: end;
+  gap: 0.24rem;
+  color: #374151;
+  font-weight: 600;
+}
+
+.cp-empty {
+  margin: 0;
+  color: #6b7280;
+}
+
+@media (max-width: 960px) {
+  .cp-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .cp-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cp-item-meta {
+    justify-items: start;
+  }
+}
+

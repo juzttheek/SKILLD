@@ -17,8 +17,8 @@ const withWorkerRating = async (services) => {
 
 const createService = async (req, res, next) => {
 	try {
-		if (!req.user || req.user.role !== "worker") {
-			return res.status(403).json({ message: "Only workers can create services" });
+		if (!req.user || !["worker", "both"].includes(req.user.role)) {
+			return res.status(403).json({ message: "Only worker or both-role users can create services" });
 		}
 
 		const {

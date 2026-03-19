@@ -1,0 +1,96 @@
+.create-service-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.create-service-main {
+  padding-top: var(--app-header-offset);
+}
+
+.cs-shell {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.cs-header {
+  margin-bottom: 1rem;
+}
+
+.cs-kicker {
+  margin: 0;
+  color: #3b6d11;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.77rem;
+}
+
+.cs-header h1 {
+  margin: 0.35rem 0 0.3rem;
+  color: #111827;
+  font-size: 30px;
+}
+
+.cs-header p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.cs-form-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 1rem;
+}
+
+.cs-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.cs-form label {
+  display: grid;
+  gap: 0.38rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.cs-form input,
+.cs-form textarea,
+.cs-form select {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.65rem 0.7rem;
+  font: inherit;
+  outline: none;
+}
+
+.cs-form textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.cs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.cs-field-error {
+  color: #dc2626;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.cs-actions {
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 760px) {
+  .cs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

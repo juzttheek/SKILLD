@@ -4,7 +4,7 @@
 }
 
 .worker-profile-main {
-  padding-top: 78px;
+  padding-top: var(--app-header-offset);
 }
 
 .wp-shell {
@@ -355,3 +355,4 @@
     padding: 18px;
   }
 }
+

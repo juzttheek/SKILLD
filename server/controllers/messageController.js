@@ -5,7 +5,8 @@ const buildConversationId = (userA, userB) => [userA.toString(), userB.toString(
 
 const sendMessage = async (req, res, next) => {
 	try {
-		const { receiverId, content } = req.body;
+		const { receiverId } = req.body;
+		const content = req.body.content || req.body.text;
 
 		if (!receiverId || !content) {
 			return res.status(400).json({ message: "receiverId and content are required" });

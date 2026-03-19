@@ -40,7 +40,10 @@ const Register = () => {
       toast.success("Account created successfully.");
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      const message = error?.response?.data?.message || "Unable to create account.";
+      const message =
+        error?.response?.data?.errors?.[0]?.message ||
+        error?.response?.data?.message ||
+        "Unable to create account.";
       setApiError(message);
       toast.error(message);
     }
@@ -51,7 +54,7 @@ const Register = () => {
       <section className="auth-card">
         <p className="auth-kicker">ServiceHire</p>
         <h1>Create your account</h1>
-        <p className="auth-subtitle">Join as a client or a worker and start building.</p>
+        <p className="auth-subtitle">Join as a client, worker, or both and start building.</p>
 
         <form className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
           <Input
@@ -100,6 +103,7 @@ const Register = () => {
             >
               <option value="client">Client</option>
               <option value="worker">Worker</option>
+              <option value="both">Client + Worker</option>
             </select>
             {errors.role ? <p className="auth-inline-error">{errors.role.message}</p> : null}
           </div>

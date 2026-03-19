@@ -4,7 +4,7 @@
 }
 
 .messages-main {
-  padding-top: 78px;
+  padding-top: var(--app-header-offset);
 }
 
 .msg-shell {
@@ -294,3 +294,4 @@
     max-height: 52vh;
   }
 }
+

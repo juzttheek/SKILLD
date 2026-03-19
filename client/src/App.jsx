@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import AdminPanel from "./pages/AdminPanel";
+import ClientProfile from "./pages/ClientProfile";
 import CreateService from "./pages/CreateService";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
@@ -26,8 +27,11 @@ const ProtectedRoute = ({ children, role }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (role && user.role !== role) {
-    return <Navigate to="/" replace />;
+  if (role) {
+    const allowedRoles = Array.isArray(role) ? role : [role];
+    if (!allowedRoles.includes(user.role)) {
+      return <Navigate to="/" replace />;
+    }
   }
 
   return children;
@@ -46,7 +50,7 @@ function App() {
       <Route
         path="/post-job"
         element={
-          <ProtectedRoute role="client">
+          <ProtectedRoute role={["client", "both"]}>
             <PostJob />
           </ProtectedRoute>
         }
@@ -54,12 +58,13 @@ function App() {
       <Route
         path="/create-service"
         element={
-          <ProtectedRoute role="worker">
+          <ProtectedRoute role={["worker", "both"]}>
             <CreateService />
           </ProtectedRoute>
         }
       />
       <Route path="/worker/:id" element={<WorkerProfile />} />
+      <Route path="/client/:id" element={<ClientProfile />} />
       <Route
         path="/dashboard"
         element={

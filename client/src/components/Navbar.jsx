@@ -4,11 +4,31 @@ import { useAuth } from "../context/AuthContext";
 import Button from "./Button";
 import "./components.css";
 
-const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/services", label: "Services" },
-  { to: "/jobs", label: "Jobs" },
-];
+const navLinksByRole = {
+  guest: [
+    { to: "/", label: "Home" },
+    { to: "/services", label: "Services" },
+    { to: "/jobs", label: "Jobs" },
+  ],
+  client: [
+    { to: "/", label: "Home" },
+    { to: "/services", label: "Services" },
+  ],
+  worker: [
+    { to: "/", label: "Home" },
+    { to: "/jobs", label: "Jobs" },
+  ],
+  both: [
+    { to: "/", label: "Home" },
+    { to: "/services", label: "Services" },
+    { to: "/jobs", label: "Jobs" },
+  ],
+  admin: [
+    { to: "/", label: "Home" },
+    { to: "/services", label: "Services" },
+    { to: "/jobs", label: "Jobs" },
+  ],
+};
 
 const getInitials = (name = "") =>
   name
@@ -29,12 +49,21 @@ const Navbar = () => {
     setDropdownOpen(false);
   }, [location.pathname]);
 
-  const roleAction = useMemo(() => {
+  const roleActions = useMemo(() => {
     if (!user) return null;
-    if (user.role === "client") return { label: "Post Job", to: "/post-job" };
-    if (user.role === "worker") return { label: "My Services", to: "/dashboard" };
-    return { label: "Admin", to: "/admin" };
+    if (user.role === "client") return [{ label: "Post Job", to: "/post-job" }];
+    if (user.role === "worker") return [{ label: "Create Service", to: "/create-service" }];
+    if (user.role === "both") {
+      return [
+        { label: "Post Job", to: "/post-job" },
+        { label: "Create Service", to: "/create-service" },
+      ];
+    }
+    return [{ label: "Admin", to: "/admin" }];
   }, [user]);
+
+  const roleKey = user?.role || "guest";
+  const navLinks = navLinksByRole[roleKey] || navLinksByRole.guest;
 
   return (
     <header className="sh-navbar">
@@ -79,7 +108,9 @@ const Navbar = () => {
                 <div className="sh-dropdown">
                   <Link to="/dashboard">Dashboard</Link>
                   <Link to="/messages">Messages</Link>
-                  {roleAction ? <Link to={roleAction.to}>{roleAction.label}</Link> : null}
+                  {roleActions?.map((item) => (
+                    <Link key={item.to} to={item.to}>{item.label}</Link>
+                  ))}
                   <button
                     type="button"
                     onClick={() => {
@@ -121,7 +152,9 @@ const Navbar = () => {
             <>
               <Link to="/dashboard">Dashboard</Link>
               <Link to="/messages">Messages</Link>
-              {roleAction ? <Link to={roleAction.to}>{roleAction.label}</Link> : null}
+              {roleActions?.map((item) => (
+                <Link key={item.to} to={item.to}>{item.label}</Link>
+              ))}
               <button type="button" onClick={logout}>
                 Logout
               </button>

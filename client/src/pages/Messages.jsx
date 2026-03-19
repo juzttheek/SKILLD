@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FaComments } from "react-icons/fa";
-import { io } from "socket.io-client";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
+import { useSocket } from "../context/SocketContext";
 import "./Messages.css";
 
 const formatTime = (value) => {
@@ -31,12 +31,10 @@ const getInitials = (name = "") =>
     .map((part) => part[0]?.toUpperCase())
     .join("") || "U";
 
-const socketBaseUrl = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/api\/?$/, "");
-
 const Messages = () => {
   const { user } = useAuth();
+  const { socket } = useSocket();
   const { userId: routeUserId } = useParams();
-  const socketRef = useRef(null);
   const messagesEndRef = useRef(null);
 
   const currentUserId = user?.id || user?._id;
@@ -52,14 +50,7 @@ const Messages = () => {
   const [onlineSeenAt, setOnlineSeenAt] = useState({});
 
   useEffect(() => {
-    if (!currentUserId) return;
-
-    const socket = io(socketBaseUrl, {
-      query: { userId: currentUserId },
-      transports: ["websocket"],
-    });
-
-    socketRef.current = socket;
+    if (!currentUserId || !socket) return;
 
     socket.on("receiveMessage", (payload) => {
       const senderId = payload?.senderId;
@@ -118,10 +109,9 @@ const Messages = () => {
     });
 
     return () => {
-      socket.disconnect();
-      socketRef.current = null;
+      socket.off("receiveMessage");
     };
-  }, [currentUserId, selectedUserId]);
+  }, [currentUserId, selectedUserId, socket]);
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -233,7 +223,7 @@ const Messages = () => {
       createdAt: optimistic.createdAt,
     };
 
-    socketRef.current?.emit("sendMessage", payload);
+    socket?.emit("sendMessage", payload);
 
     try {
       await axiosInstance.post("/api/messages", {

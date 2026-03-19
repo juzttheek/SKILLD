@@ -8,6 +8,7 @@ import Footer from "../components/Footer";
 import JobCard from "../components/JobCard";
 import Navbar from "../components/Navbar";
 import ServiceCard from "../components/ServiceCard";
+import { useAuth } from "../context/AuthContext";
 import "./Home.css";
 
 const serviceCategories = [
@@ -42,6 +43,7 @@ const categoryBlocks = [
 
 const Home = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [services, setServices] = useState([]);
   const [jobs, setJobs] = useState([]);
@@ -81,6 +83,11 @@ const Home = () => {
     event.preventDefault();
     navigate(`/services?search=${encodeURIComponent(search.trim())}`);
   };
+
+  const isClient = user?.role === "client" || user?.role === "both";
+  const isWorker = user?.role === "worker" || user?.role === "both";
+  const isBoth = user?.role === "both";
+  const isGuest = !user;
 
   return (
     <div className="home-page">
@@ -142,49 +149,55 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="section-wrap">
-          <div className="section-head">
-            <h2>Popular Services</h2>
-            <Link to="/services">Browse All →</Link>
-          </div>
+        {(isGuest || isClient) ? (
+          <section className="section-wrap">
+            <div className="section-head">
+              <h2>Popular Services</h2>
+              <Link to="/services">Browse All →</Link>
+            </div>
 
-          <div className="services-grid">
-            {loadingServices
-              ? Array.from({ length: 8 }).map((_, index) => (
-                  <div key={`service-skeleton-${index}`} className="card-skeleton" />
-                ))
-              : services.map((service) => <ServiceCard key={service._id} service={service} />)}
-          </div>
-        </section>
+            <div className="services-grid">
+              {loadingServices
+                ? Array.from({ length: 8 }).map((_, index) => (
+                    <div key={`service-skeleton-${index}`} className="card-skeleton" />
+                  ))
+                : services.map((service) => <ServiceCard key={service._id} service={service} />)}
+            </div>
+          </section>
+        ) : null}
 
-        <section className="section-wrap">
-          <div className="section-head">
-            <h2>Recent Job Posts</h2>
-            <Link to="/jobs">View All Jobs →</Link>
-          </div>
+        {(isGuest || isWorker) ? (
+          <section className="section-wrap">
+            <div className="section-head">
+              <h2>Recent Job Posts</h2>
+              <Link to="/jobs">View All Jobs →</Link>
+            </div>
 
-          <div className="jobs-grid">
-            {loadingJobs
-              ? Array.from({ length: 4 }).map((_, index) => (
-                  <div key={`job-skeleton-${index}`} className="card-skeleton job-skeleton" />
-                ))
-              : jobs.map((job) => (
-                  <JobCard
-                    key={job._id}
-                    job={job}
-                    onViewApply={() => navigate(`/jobs/${job._id}`)}
-                  />
-                ))}
-          </div>
+            <div className="jobs-grid">
+              {loadingJobs
+                ? Array.from({ length: 4 }).map((_, index) => (
+                    <div key={`job-skeleton-${index}`} className="card-skeleton job-skeleton" />
+                  ))
+                : jobs.map((job) => (
+                    <JobCard
+                      key={job._id}
+                      job={job}
+                      onViewApply={() => navigate(`/jobs/${job._id}`)}
+                    />
+                  ))}
+            </div>
 
-          <div className="jobs-cta-wrap">
-            <Link to="/post-job">
-              <Button variant="primary" size="lg">
-                Post a Job for Free
-              </Button>
-            </Link>
-          </div>
-        </section>
+            {isGuest ? (
+              <div className="jobs-cta-wrap">
+                <Link to="/post-job">
+                  <Button variant="primary" size="lg">
+                    Post a Job for Free
+                  </Button>
+                </Link>
+              </div>
+            ) : null}
+          </section>
+        ) : null}
 
         <section className="section-wrap">
           <h2>Explore by Category</h2>
@@ -202,28 +215,87 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="cta-banner">
-          <div className="cta-content">
-            <h2>Are you a skilled professional?</h2>
-            <p>Create your profile, showcase your strengths, and get hired by quality clients.</p>
-            <div className="cta-actions">
-              <Link to="/create-service">
-                <Button variant="secondary" size="lg">
-                  Create Worker Profile
-                </Button>
-              </Link>
-              <Link to="/services">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  style={{ borderColor: "#FFFFFF", color: "#FFFFFF", background: "transparent" }}
-                >
-                  Learn More
-                </Button>
-              </Link>
+        {isGuest ? (
+          <section className="cta-banner">
+            <div className="cta-content">
+              <h2>Are you a skilled professional?</h2>
+              <p>Create your profile, showcase your strengths, and get hired by quality clients.</p>
+              <div className="cta-actions">
+                <Link to="/register">
+                  <Button variant="secondary" size="lg">
+                    Join as Worker
+                  </Button>
+                </Link>
+                <Link to="/services">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    style={{ borderColor: "#FFFFFF", color: "#FFFFFF", background: "transparent" }}
+                  >
+                    Learn More
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : null}
+
+        {isClient && !isBoth ? (
+          <section className="cta-banner">
+            <div className="cta-content">
+              <h2>Need to hire for a new project?</h2>
+              <p>Post your job and get proposals from qualified workers fast.</p>
+              <div className="cta-actions">
+                <Link to="/post-job">
+                  <Button variant="secondary" size="lg">
+                    Post a Job
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {isWorker && !isBoth ? (
+          <section className="cta-banner">
+            <div className="cta-content">
+              <h2>Ready to attract more clients?</h2>
+              <p>Publish your service and start receiving direct inquiries.</p>
+              <div className="cta-actions">
+                <Link to="/create-service">
+                  <Button variant="secondary" size="lg">
+                    Create Service
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {isBoth ? (
+          <section className="cta-banner">
+            <div className="cta-content">
+              <h2>Manage work from both sides</h2>
+              <p>Post jobs for hiring and publish services to win projects.</p>
+              <div className="cta-actions">
+                <Link to="/post-job">
+                  <Button variant="secondary" size="lg">
+                    Post a Job
+                  </Button>
+                </Link>
+                <Link to="/create-service">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    style={{ borderColor: "#FFFFFF", color: "#FFFFFF", background: "transparent" }}
+                  >
+                    Create Service
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </section>
+        ) : null}
       </main>
 
       <Footer />

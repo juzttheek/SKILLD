@@ -168,7 +168,22 @@ const Dashboard = () => {
   const { user, updateUser, loading: authLoading } = useAuth();
 
   const role = user?.role || "client";
-  const sectionList = role === "worker" ? workerSections : clientSections;
+  const isBoth = role === "both";
+  const sectionList = isBoth
+    ? [
+        "Overview",
+        "My Posted Jobs",
+        "Hired Workers",
+        "My Services",
+        "Job Applications",
+        "Active Work",
+        "Earnings",
+        "Messages",
+        "Account Settings",
+      ]
+    : role === "worker"
+      ? workerSections
+      : clientSections;
   const [activeSection, setActiveSection] = useState("Overview");
   const [services, setServices] = useState(servicesMock);
   const [avatarPreview, setAvatarPreview] = useState(user?.avatar || "");
@@ -198,7 +213,7 @@ const Dashboard = () => {
 
   const welcomeName = user?.name || "there";
 
-  const isWorker = role === "worker";
+  const isWorker = role === "worker" || role === "both";
 
   useEffect(() => {
     reset({
@@ -215,6 +230,31 @@ const Dashboard = () => {
   }, [user, reset]);
 
   const overviewSection = useMemo(() => {
+    if (isBoth) {
+      return (
+        <>
+          <div className="dash-stats-grid">
+            {[...clientStats, ...workerStats].map((stat) => (
+              <article key={stat.label} className="dash-stat-card">
+                <p className="dash-stat-value">{stat.value}</p>
+                <p className="dash-stat-label">{stat.label}</p>
+                {stat.isRating ? <StarRating rating={stat.value} size={14} /> : null}
+              </article>
+            ))}
+          </div>
+
+          <section className="dash-panel">
+            <h2>Recent Activity</h2>
+            <ul className="dash-timeline">
+              {recentActivityMock.slice(0, 5).map((item, index) => (
+                <li key={`${item}-${index}`}>{item}</li>
+              ))}
+            </ul>
+          </section>
+        </>
+      );
+    }
+
     if (isWorker) {
       return (
         <>
@@ -259,7 +299,7 @@ const Dashboard = () => {
         </section>
       </>
     );
-  }, [isWorker]);
+  }, [isWorker, isBoth]);
 
   const renderClientSection = () => {
     switch (activeSection) {
@@ -680,7 +720,15 @@ const Dashboard = () => {
               ))}
             </div>
 
-            <section className="dash-content">{isWorker ? renderWorkerSection() : renderClientSection()}</section>
+            <section className="dash-content">
+              {isBoth
+                ? (["My Services", "Job Applications", "Active Work", "Earnings"].includes(activeSection)
+                    ? renderWorkerSection()
+                    : renderClientSection())
+                : isWorker
+                  ? renderWorkerSection()
+                  : renderClientSection()}
+            </section>
           </div>
         </div>
       </main>
